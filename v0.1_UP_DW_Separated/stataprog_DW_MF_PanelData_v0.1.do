@@ -6,6 +6,7 @@ set more off
 
 * It only works in the ~\Documents directory
 cd C:\Users\ADMIN\Documents\SovereignRatingDifferences
+cd v0.1_UP_DW_Separated
 import delimited using DW_MF_PanelData, delimiters(";") clear
 
 * We can't xtset string variables, so we have to generate a new numeric column

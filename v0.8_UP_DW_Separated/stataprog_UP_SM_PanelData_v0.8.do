@@ -78,10 +78,10 @@ estimates store m3, title (Model DefLast5Y)
 eststo: quietly xtoprobit $ylist $xlist_grossdebt_deflast10, vce(robust)
 estimates store m4, title (Model DefLast10Y)
 
-* showing in a nice format and storing it in a .rtf file to import to Word
+* showing in a nice format and storing it in a .csv file to import to Word
 * estout mall m1 m2 m3 m4, cells(b(star fmt(3)) se(par fmt(2))) legend label varlabels(_cons Constant)
 estout m1 m2 m3 m4, starlevels(* 0.10 ** 0.05 *** 0.01) cells(b(star fmt(3)) se(par fmt(2))) legend label varlabels(_cons Constant)
-esttab using UP_SM_gross_debt_results.rtf, replace star(* 0.10 ** 0.05 *** 0.01)
+esttab using UP_SM_gross_debt_results.csv, replace star(* 0.10 ** 0.05 *** 0.01)
 
 * clear the stored results to run again
 eststo clear
@@ -100,9 +100,9 @@ estimates store m3, title (Model DefLast5Y)
 eststo: quietly xtoprobit $ylist $xlist_netdebt_deflast10, vce(robust)
 estimates store m4, title (Model DefLast10Y)
 
-* showing in a nice format and storing it in a .rtf file to import to Word
+* showing in a nice format and storing it in a .csv file to import to Word
 estout m1 m2 m3 m4, starlevels(* 0.10 ** 0.05 *** 0.01) cells(b(star fmt(3)) se(par fmt(2))) legend label varlabels(_cons Constant)
-esttab using UP_SM_net_debt_results.rtf, replace star(* 0.10 ** 0.05 *** 0.01)
+esttab using UP_SM_net_debt_results.csv, replace star(* 0.10 ** 0.05 *** 0.01)
 
 * clear the stored results to run again
 eststo clear
@@ -121,9 +121,9 @@ estimates store m3, title (Model DefLast5Y)
 eststo: quietly xtoprobit $ylist $xlist_budgetbal_deflast10, vce(robust)
 estimates store m4, title (Model DefLast10Y)
 
-* showing in a nice format and storing it in a .rtf file to import to Word
+* showing in a nice format and storing it in a .csv file to import to Word
 estout m1 m2 m3 m4, starlevels(* 0.10 ** 0.05 *** 0.01) cells(b(star fmt(3)) se(par fmt(2))) legend label varlabels(_cons Constant)
-esttab using UP_SM_budgetbal_results.rtf, replace star(* 0.10 ** 0.05 *** 0.01)
+esttab using UP_SM_budgetbal_results.csv, replace star(* 0.10 ** 0.05 *** 0.01)
 
 * clear the stored results to run again
 eststo clear
@@ -142,9 +142,9 @@ estimates store m3, title (Model DefLast5Y)
 eststo: quietly xtoprobit $ylist $xlist_structbal_deflast10, vce(robust)
 estimates store m4, title (Model DefLast10Y)
 
-* showing in a nice format and storing it in a .rtf file to import to Word
+* showing in a nice format and storing it in a .csv file to import to Word
 estout m1 m2 m3 m4, starlevels(* 0.10 ** 0.05 *** 0.01) cells(b(star fmt(3)) se(par fmt(2))) legend label varlabels(_cons Constant)
-esttab using UP_SM_structbal_results.rtf, replace star(* 0.10 ** 0.05 *** 0.01)
+esttab using UP_SM_structbal_results.csv, replace star(* 0.10 ** 0.05 *** 0.01)
 
 * clear the stored results to run again
 eststo clear

@@ -7,7 +7,7 @@ set more off
 * It only works in the ~\Documents directory
 cd C:\Users\ADMIN\Documents\SovereignRatingDifferences
 cd v0.8_UP_DW_Separated
-import delimited using DW_SF_SpecGrade_PanelData_WithAvgRating delimiters(";") clear
+import delimited using DW_SF_SpecGrade_PanelData_WithAvgRating, delimiters(";") clear
 
 * We can't xtset string variables, so we have to generate a new numeric column
 * countryno based on the country2code value

@@ -6,7 +6,7 @@ set more off
 
 * It only works in the ~\Documents directory
 cd C:\Users\ADMIN\Documents\SovereignRatingDifferences
-cd v0.8_UP_DW_Separated
+cd v0.9_UP_DW_RtgAverage_Separated
 import delimited using UP_SM_SpecGrade_PanelData_WithAvgRating, delimiters(";") clear
 
 * We can't xtset string variables, so we have to generate a new numeric column

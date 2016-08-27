@@ -56,26 +56,26 @@ xtset $id $t
 xtdescribe
 xtsum $id $t $ylist $xlist
 
-* Using Random-effects ordered probit model applied to the observations where
+* Using Random-effects probit model applied to the observations where
 * Moody's rating is HIGHER than Fitch, using Robust standard errors
 * estimates store is for the estout
 * eststo is for esttab
 * outreg2 shows an enormous table on word
 
 * gross debt
-* eststo: quietly xtoprobit $ylist $allx_list, vce(robust)
+* eststo: quietly xtprobit $ylist $allx_list, vce(robust)
 * estimates store mall, title (Model All)
 
-eststo: quietly xtoprobit $ylist $xlist_grossdebt_deflast1, vce(robust)
+eststo: quietly xtprobit $ylist $xlist_grossdebt_deflast1, vce(robust)
 estimates store m1, title (Model DefLastY)
 
-eststo: quietly xtoprobit $ylist $xlist_grossdebt_deflast2, vce(robust)
+eststo: quietly xtprobit $ylist $xlist_grossdebt_deflast2, vce(robust)
 estimates store m2, title (Model DefLast2Y)
 
-eststo: quietly xtoprobit $ylist $xlist_grossdebt_deflast5, vce(robust)
+eststo: quietly xtprobit $ylist $xlist_grossdebt_deflast5, vce(robust)
 estimates store m3, title (Model DefLast5Y)
 
-eststo: quietly xtoprobit $ylist $xlist_grossdebt_deflast10, vce(robust)
+eststo: quietly xtprobit $ylist $xlist_grossdebt_deflast10, vce(robust)
 estimates store m4, title (Model DefLast10Y)
 
 * showing in a nice format and storing it in a .csv file to import to Word
@@ -88,16 +88,16 @@ eststo clear
 estimates clear
 
 * net debt
-eststo: quietly xtoprobit $ylist $xlist_netdebt_deflast1, vce(robust)
+eststo: quietly xtprobit $ylist $xlist_netdebt_deflast1, vce(robust)
 estimates store m1, title (Model DefLastY)
 
-eststo: quietly xtoprobit $ylist $xlist_netdebt_deflast2, vce(robust)
+eststo: quietly xtprobit $ylist $xlist_netdebt_deflast2, vce(robust)
 estimates store m2, title (Model DefLast2Y)
 
-eststo: quietly xtoprobit $ylist $xlist_netdebt_deflast5, vce(robust)
+eststo: quietly xtprobit $ylist $xlist_netdebt_deflast5, vce(robust)
 estimates store m3, title (Model DefLast5Y)
 
-eststo: quietly xtoprobit $ylist $xlist_netdebt_deflast10, vce(robust)
+eststo: quietly xtprobit $ylist $xlist_netdebt_deflast10, vce(robust)
 estimates store m4, title (Model DefLast10Y)
 
 * showing in a nice format and storing it in a .csv file to import to Word
@@ -109,16 +109,16 @@ eststo clear
 estimates clear
 
 * budget bal
-eststo: quietly xtoprobit $ylist $xlist_budgetbal_deflast1, vce(robust)
+eststo: quietly xtprobit $ylist $xlist_budgetbal_deflast1, vce(robust)
 estimates store m1, title (Model DefLastY)
 
-eststo: quietly xtoprobit $ylist $xlist_budgetbal_deflast2, vce(robust)
+eststo: quietly xtprobit $ylist $xlist_budgetbal_deflast2, vce(robust)
 estimates store m2, title (Model DefLast2Y)
 
-eststo: quietly xtoprobit $ylist $xlist_budgetbal_deflast5, vce(robust)
+eststo: quietly xtprobit $ylist $xlist_budgetbal_deflast5, vce(robust)
 estimates store m3, title (Model DefLast5Y)
 
-eststo: quietly xtoprobit $ylist $xlist_budgetbal_deflast10, vce(robust)
+eststo: quietly xtprobit $ylist $xlist_budgetbal_deflast10, vce(robust)
 estimates store m4, title (Model DefLast10Y)
 
 * showing in a nice format and storing it in a .csv file to import to Word
@@ -130,16 +130,16 @@ eststo clear
 estimates clear
 
 * struct bal
-eststo: quietly xtoprobit $ylist $xlist_structbal_deflast1, vce(robust)
+eststo: quietly xtprobit $ylist $xlist_structbal_deflast1, vce(robust)
 estimates store m1, title (Model DefLastY)
 
-eststo: quietly xtoprobit $ylist $xlist_structbal_deflast2, vce(robust)
+eststo: quietly xtprobit $ylist $xlist_structbal_deflast2, vce(robust)
 estimates store m2, title (Model DefLast2Y)
 
-eststo: quietly xtoprobit $ylist $xlist_structbal_deflast5, vce(robust)
+eststo: quietly xtprobit $ylist $xlist_structbal_deflast5, vce(robust)
 estimates store m3, title (Model DefLast5Y)
 
-eststo: quietly xtoprobit $ylist $xlist_structbal_deflast10, vce(robust)
+eststo: quietly xtprobit $ylist $xlist_structbal_deflast10, vce(robust)
 estimates store m4, title (Model DefLast10Y)
 
 * showing in a nice format and storing it in a .csv file to import to Word

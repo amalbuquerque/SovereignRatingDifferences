@@ -1,14 +1,20 @@
 * Panel Data Models in Stata
 * Copyright 2016 by Andre Albuquerque
 
+* It only works in the ~\Documents directory
+cd C:\Users\ADMIN\Documents\SovereignRatingDifferences
+cd v1.81_UP_DW_Separated_SimpleProbit
+
+* 2016/09/11 12:43:49, AA: easier to maintain one script than dozens
+foreach pair in up_mf up_sm up_sf dw_mf dw_sm dw_sf {
+
 clear all
 set more off
 * set trace on
 
-* It only works in the ~\Documents directory
-cd C:\Users\ADMIN\Documents\SovereignRatingDifferences
-cd v1.8_UP_DW_Separated_OrderedProbit
-import delimited using UP_MF_PanelData, delimiters(";") clear
+
+* import delimited using UP_MF_PanelData, delimiters(";") clear
+import delimited using `pair'_PanelData, delimiters(";") clear
 
 * We can't xtset string variables, so we have to generate a new numeric column
 * countryno based on the country2code value
@@ -16,7 +22,8 @@ encode country2code, gen(countryno)
 
 global id countryno
 global t year
-global ylist diff_up_mf
+* global ylist diff_up_mf
+global ylist diff_`pair'
 global allx_list ngdpdpc_var ngdp_rpch extdebtpercgni_var ggxwdg_ngdp_var ggxwdn_ngdp_var budgetbal_ngdp_var ggsb_npgdp pcpipch defaultlastyear defaultlast2years defaultlast5years defaultlast10years
 
 * Gross debt have more 5% +- observations than net debt
@@ -60,17 +67,16 @@ foreach s in grossdebt netdebt budgetbal structbal {
 
     foreach y in 1 2 5 10 {
         * running the ordered probit
-        quietly xtoprobit $ylist ${xlist_`s'_deflast`y'}, vce(robust)
+        quietly xtprobit $ylist ${xlist_`s'_deflast`y'}, vce(robust)
         * estimates store oprob, title (DefLastY)
         eststo `s'_OP_`y', title (`s'Default`y')
 
         * getting the marginal effects
-        * when ratingDiff = 0-2, 0-2.diff_up_mf
-        foreach o in 0 1 2 {
-            quietly margins, dydx(*) predict(pu0 outcome(`o')) post
-            eststo `s'_ME`o'_Def`y', title (MERat`o'_`s'_Def`y')
-            estimates restore `s'_OP_`y'
-        }
+        * when ratingDiff = 0-1, 0-1.diff_up_mf
+        * for the simple probit we don't need to specify the outcome
+        quietly margins, dydx(*) predict(pu0) post
+        eststo `s'_ME1_Def`y', title (MERat1_`s'_Def`y')
+        estimates restore `s'_OP_`y'
     }
 
     * showing in a nice format and storing it in a .csv file to import to Word
@@ -80,15 +86,19 @@ foreach s in grossdebt netdebt budgetbal structbal {
 
     * 2016/09/10 23:28:09, AA: al-sakka show the t-statistics, so we show it as well
     * the default way is to place each model on each column
-    esttab using UP_MF_`s'_results_wide.csv, mtitles replace star(* 0.10 ** 0.05 *** 0.01) pr2 legend label varlabels(_cons Const)
+    * esttab using UP_MF_`s'_results_wide.csv, mtitles replace star(* 0.10 ** 0.05 *** 0.01) pr2 legend label varlabels(_cons Const)
+    esttab using `pair'_`s'_results_wide.csv, mtitles replace star(* 0.10 ** 0.05 *** 0.01) pr2 legend label varlabels(_cons Const)
 
     mat list r(coefs)
-    mat rename r(coefs) foo`s'
-    mat list foo`s'
+    mat rename r(coefs) foo`pair'`s'
+    mat list foo`pair'`s'
     * to get the results transposed
-    esttab matrix(foo`s', transpose) using UP_MF_`s'_results_transpose.csv, mtitles replace star(* 0.10 ** 0.05 *** 0.01) pr2 legend label varlabels(_cons Const)
+    esttab matrix(foo`pair'`s', transpose) using `pair'_`s'_results_transpose.csv, mtitles replace star(* 0.10 ** 0.05 *** 0.01) pr2 legend label varlabels(_cons Const)
 
     * clear the stored results to run again
     eststo clear
     estimates clear
+}
+
+* ends the foreach from the 9th line
 }

@@ -8,7 +8,7 @@ set more off
 * It only works in the ~\Documents directory
 cd C:\Users\ADMIN\Documents\SovereignRatingDifferences
 cd v1.8_UP_DW_Separated_OrderedProbit
-import delimited using UP_MF_PanelData, delimiters(";") clear
+import delimited using DW_SM_PanelData, delimiters(";") clear
 
 * We can't xtset string variables, so we have to generate a new numeric column
 * countryno based on the country2code value
@@ -16,7 +16,7 @@ encode country2code, gen(countryno)
 
 global id countryno
 global t year
-global ylist diff_up_mf
+global ylist diff_dw_sm
 global allx_list ngdpdpc_var ngdp_rpch extdebtpercgni_var ggxwdg_ngdp_var ggxwdn_ngdp_var budgetbal_ngdp_var ggsb_npgdp pcpipch defaultlastyear defaultlast2years defaultlast5years defaultlast10years
 
 * Gross debt have more 5% +- observations than net debt
@@ -80,13 +80,13 @@ foreach s in grossdebt netdebt budgetbal structbal {
 
     * 2016/09/10 23:28:09, AA: al-sakka show the t-statistics, so we show it as well
     * the default way is to place each model on each column
-    esttab using UP_MF_`s'_results_wide.csv, mtitles replace star(* 0.10 ** 0.05 *** 0.01) pr2 legend label varlabels(_cons Const)
+    esttab using DW_SM_`s'_results_wide.csv, mtitles replace star(* 0.10 ** 0.05 *** 0.01) pr2 legend label varlabels(_cons Const)
 
     mat list r(coefs)
     mat rename r(coefs) foo`s'
     mat list foo`s'
     * to get the results transposed
-    esttab matrix(foo`s', transpose) using UP_MF_`s'_results_transpose.csv, mtitles replace star(* 0.10 ** 0.05 *** 0.01) pr2 legend label varlabels(_cons Const)
+    esttab matrix(foo`s', transpose) using DW_SM_`s'_results_transpose.csv, mtitles replace star(* 0.10 ** 0.05 *** 0.01) pr2 legend label varlabels(_cons Const)
 
     * clear the stored results to run again
     eststo clear

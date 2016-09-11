@@ -3,7 +3,7 @@
 
 * It only works in the ~\Documents directory
 cd C:\Users\ADMIN\Documents\SovereignRatingDifferences
-cd v1.9_UP_DW_RtgAverage_Separated_OrderedProbit
+cd v1.91_UP_DW_RtgAverage_Separated_SimpleProbit
 cd InvGrade
 
 * 2016/09/11 12:43:49, AA: easier to maintain one script than dozens
@@ -68,17 +68,16 @@ foreach s in grossdebt netdebt budgetbal structbal {
 
     foreach y in 1 2 5 10 {
         * running the ordered probit
-        quietly xtoprobit $ylist ${xlist_`s'_deflast`y'}, vce(robust)
+        quietly xtprobit $ylist ${xlist_`s'_deflast`y'}, vce(robust)
         * estimates store oprob, title (DefLastY)
         eststo `s'_OP_`y', title (`s'Default`y')
 
         * getting the marginal effects
-        * when ratingDiff = 0-2, 0-2.diff_up_mf
-        foreach o in 0 1 2 {
-            quietly margins, dydx(*) predict(pu0 outcome(`o')) post
-            eststo `s'_ME`o'_Def`y', title (MERat`o'_`s'_Def`y')
-            estimates restore `s'_OP_`y'
-        }
+        * when ratingDiff = 0-1, 0-1.diff_up_mf
+        * for the simple probit we don't need to specify the outcome
+        quietly margins, dydx(*) predict(pu0) post
+        eststo `s'_ME1_Def`y', title (MERat1_`s'_Def`y')
+        estimates restore `s'_OP_`y'
     }
 
     * showing in a nice format and storing it in a .csv file to import to Word
